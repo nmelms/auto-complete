@@ -4,7 +4,8 @@ const insertButton = document.querySelector("#insert-btn");
 const searchButton = document.querySelector("#search-btn");
 
 input.addEventListener("input", (e) => {
-  text.innerText = e.target.value;
+  let words = trie.autocomplete(input.value);
+  console.log(words, "in inpt");
 });
 insertButton.addEventListener("click", () => {
   trie.insert(input.value);
@@ -47,7 +48,31 @@ class Trie {
       }
     }
     console.log("true ");
-    return true;
+    return currentNode;
+  }
+
+  collectAllNodes(root, word = "", words = []) {
+    for (let char in root.children) {
+      let newWord = word + char;
+      if (char === "*") {
+        words.push(newWord);
+      } else {
+        this.collectAllNodes(root.children[char], newWord, words);
+      }
+    }
+    return words;
+  }
+
+  autocomplete(prefix) {
+    console.log(prefix);
+    let currentNode = this.search(prefix);
+
+    if (!currentNode) {
+      console.log("no nodes");
+      return false;
+    }
+    console.log(this.collectAllNodes(currentNode));
+    return this.collectAllNodes(currentNode);
   }
 }
 
