@@ -1,7 +1,6 @@
 const input = document.querySelector("#input");
 const text = document.querySelector("#display-text");
 const insertButton = document.querySelector("#insert-btn");
-const searchButton = document.querySelector("#search-btn");
 
 input.addEventListener("input", (e) => {
   text.innerHTML = "";
@@ -22,9 +21,6 @@ input.addEventListener("input", (e) => {
 
 insertButton.addEventListener("click", () => {
   trie.insert(input.value);
-});
-searchButton.addEventListener("click", () => {
-  trie.search(input.value);
 });
 
 class TrieNode {
