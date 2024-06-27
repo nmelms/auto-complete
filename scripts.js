@@ -4,9 +4,22 @@ const insertButton = document.querySelector("#insert-btn");
 const searchButton = document.querySelector("#search-btn");
 
 input.addEventListener("input", (e) => {
+  text.innerHTML = "";
   let words = trie.autocomplete(input.value);
-  console.log(words, "in inpt");
+  if (input.value === "") {
+    words = [];
+  }
+
+  let list = document.createElement("ul");
+
+  for (let word of words) {
+    let item = document.createElement("li");
+    item.innerText = input.value + word;
+    list.appendChild(item);
+  }
+  text.appendChild(list);
 });
+
 insertButton.addEventListener("click", () => {
   trie.insert(input.value);
 });
@@ -37,26 +50,23 @@ class Trie {
   }
 
   search(word) {
-    console.log("search ran", word);
     let currentNode = this.root;
     for (let char of word) {
       if (currentNode.children[char]) {
         currentNode = currentNode.children[char];
       } else {
-        console.log("false");
         return false;
       }
     }
-    console.log("true ");
     return currentNode;
   }
 
   collectAllNodes(root, word = "", words = []) {
     for (let char in root.children) {
-      let newWord = word + char;
       if (char === "*") {
-        words.push(newWord);
+        words.push(word);
       } else {
+        let newWord = word + char;
         this.collectAllNodes(root.children[char], newWord, words);
       }
     }
@@ -64,14 +74,11 @@ class Trie {
   }
 
   autocomplete(prefix) {
-    console.log(prefix);
     let currentNode = this.search(prefix);
 
     if (!currentNode) {
-      console.log("no nodes");
       return false;
     }
-    console.log(this.collectAllNodes(currentNode));
     return this.collectAllNodes(currentNode);
   }
 }
