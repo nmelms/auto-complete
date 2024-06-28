@@ -1,6 +1,18 @@
 body {
   background-color: black;
   color: white;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  height: 100vh;
+}
+.block {
+  margin-top: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 300px;
 }
 #display-text {
   padding: 1rem;

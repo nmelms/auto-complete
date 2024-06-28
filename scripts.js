@@ -57,25 +57,24 @@ class Trie {
     return currentNode;
   }
 
-  collectAllNodes(root, word = "", words = []) {
+  collectAllWords(root, word = "", words = []) {
     for (let char in root.children) {
       if (char === "*") {
         words.push(word);
       } else {
         let newWord = word + char;
-        this.collectAllNodes(root.children[char], newWord, words);
+        this.collectAllWords(root.children[char], newWord, words);
       }
     }
     return words;
   }
 
-  autocomplete(prefix) {
+  findWords(prefix) {
     let currentNode = this.search(prefix);
-
     if (!currentNode) {
       return false;
     }
-    return this.collectAllNodes(currentNode);
+    return this.collectAllWords(currentNode);
   }
 }
 
