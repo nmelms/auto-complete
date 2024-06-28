@@ -4,7 +4,7 @@ const insertButton = document.querySelector("#insert-btn");
 
 input.addEventListener("input", (e) => {
   text.innerHTML = "";
-  let words = trie.autocomplete(input.value);
+  let words = trie.findWords(input.value);
   if (input.value === "") {
     words = [];
   }
